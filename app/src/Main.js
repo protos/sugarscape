@@ -9,7 +9,7 @@ class Main extends Component {
           SugarScape!!!
         </header>
         <div className="main-content">
-          
+
         </div>
       </div>
     );
