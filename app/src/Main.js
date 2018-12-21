@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Grid from "./Components/Grid"
 import './Main.css';
+
 
 class Main extends Component {
   render() {
@@ -9,7 +11,7 @@ class Main extends Component {
           SugarScape!!!
         </header>
         <div className="main-content">
-
+          <Grid />
         </div>
       </div>
     );
