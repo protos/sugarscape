@@ -8,6 +8,8 @@ class Grid extends Component {
         this.state = {
             height: 600,
             width: 600,
+            noOfXSquares: 50,
+            noOfYSquares: 50,
             color: "white"
         }
     }
@@ -17,14 +19,24 @@ class Grid extends Component {
     }
 
     updateCanvas() {
-        const cellHeight = this.state.height / 50;
-        const cellWidth = this.state.width / 50;
+        const cellHeight = this.state.height / this.state.noOfYSquares;
+        const cellWidth = this.state.width / this.state.noOfXSquares;
         const ctx = this.refs.canvas.getContext('2d');
 
         ctx.fillStyle = "white";
         ctx.fillRect(0,0, this.state.width, this.state.height);
 
-        return(<Square parentContext={ctx} xPos={0} yPos={0} width={cellWidth} height={cellHeight} />);
+        for (let a = 0, b = 49; a < b; a++ ) {
+            ctx.moveTo(((a + 1) * cellWidth), 0);
+            ctx.lineTo(((a + 1) * cellWidth), this.state.height);
+        }
+        for (let a = 0, b = 49; a < b; a++ ) {
+            ctx.moveTo(0, ((a + 1) * cellHeight));
+            ctx.lineTo(this.state.width, ((a + 1) * cellHeight));
+        }
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
     }
 
     render() {
@@ -34,7 +46,6 @@ class Grid extends Component {
                         width={this.state.width}
                         height={this.state.height}
                         className="gridCanvas">
-
                 </canvas>
             </div>
         );

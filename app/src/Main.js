@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Grid from "./Components/Grid"
-import './Main.css';
+import Grid from "./components/Grid"
+import './css/Main.css';
 
 
 class Main extends Component {

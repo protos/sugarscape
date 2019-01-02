@@ -5,6 +5,7 @@ class Square extends Component {
     constructor(props) {
         super(props);
 
+        debugger;
         this.state = {
             xPos: this.props.xPos,
             yPos: this.props.yPos,
