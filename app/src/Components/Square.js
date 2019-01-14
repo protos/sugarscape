@@ -7,29 +7,16 @@ class Square extends Component {
 
         debugger;
         this.state = {
-            xPos: this.props.xPos,
-            yPos: this.props.yPos,
-            height: this.props.height,
-            width: this.props.width,
-            ctx: this.props.parentContext
+            xPos: this.props.xPos || 0,
+            yPos: this.props.yPos || 0,
+            // height: this.props.height,
+            // width: this.props.width,
+            noOfSugarUnits: this.props.noOfSugarUnits || 1
         }
     }
 
     render() {
-        return (
-            function() {
-                let ctx = this.props.ctx;
-                // ctx.moveTo((this.state.xPos * this.state.width), (this.state.yPos * this.state.height));
-                // ctx.lineTo((this.state.xPos * this.state.width), (this.state.yPos * this.state.height));
-
-                ctx.moveTo(0,0);
-                ctx.lineTo(200, 200);
-
-
-                ctx.strokeStyle = "black";
-                ctx.stroke();
-            }()
-        );
+        return (<div className="square"/>);
     }
 }
 
