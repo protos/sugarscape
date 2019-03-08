@@ -13,17 +13,21 @@ class Main extends Component {
         super(props);
         this.state = {
             squares: [],
-            noOfBeasts: 400,
+            beastNumber: 20,
             beastLocations: [],
-            beasts: []
+            beasts: [],
+            rowNumber: 10,
+            columnNumber: 10,
+            gridHeight: 500,
+            gridWidth: 500
         };
 
-        for (let a = 0, b = 49; a < b; a++ ) {
-            for (let c = 0, d = 49; c < d; c++) {
+        for (let a = 0, b = this.state.columnNumber - 1; a < b; a++ ) {
+            for (let c = 0, d = this.state.rowNumber - 1; c < d; c++) {
                 this.state.squares[a] = [];
                 this.state.squares[a].push(<Square xPos={a}
                                                    yPos={c}
-                                                   noOfSugarUnits={Math.floor(Math.random() * 3) + 1} />);
+                                                   sugarUnitNumber={Math.floor(Math.random() * 3) + 1} />);
             }
         }
         console.log ('Squares generated.');
@@ -31,7 +35,7 @@ class Main extends Component {
 
 
     generateBeastCoordinates() {
-        let x = 0, y = 0, flag = 0;
+        let x = 0, y = 0, flag = 0, cnt = 0;
         for (let k = 0; k < this.state.beastLocations.length; k++) {
             while (flag === 0) {
                 x = Math.floor(Math.random() * 49);
@@ -44,8 +48,10 @@ class Main extends Component {
                 } else {
                     flag = 1;
                 }
+                cnt++;
             }
         }
+        console.log ('cnt: ' + cnt);
         return { x: x, y: y };
     }
 
@@ -53,7 +59,7 @@ class Main extends Component {
     componentDidMount() {
         console.log('component Mounted');
         let metabolism = 0, vision = 0;
-        for (let k = 0, i = this.state.noOfBeasts; k < i; k++) {
+        for (let k = 0, i = this.state.beastNumber; k < i; k++) {
             this.state.beastLocations.push(this.generateBeastCoordinates());
             metabolism = Math.floor(Math.random() * 3) + 1;
             vision = Math.floor(Math.random() * 4) + 2;
@@ -75,7 +81,11 @@ class Main extends Component {
                     SS
                 </header>
                 <div className="main-content">
-                    <Grid squares={this.state.squares}>
+                    <Grid squares={this.state.squares}
+                          columnNumber={this.state.columnNumber}
+                          rowNumber={this.state.rowNumber}
+                          gridHeight={this.state.gridHeight}
+                          gridWidth={this.state.gridWidth}>
                         {this.state.squares}
                     </Grid>
                 </div>

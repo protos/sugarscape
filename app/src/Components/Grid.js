@@ -5,12 +5,13 @@ class Grid extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             squares:props.squares,
-            height: props.height || 600,
-            width: props.width || 600,
-            noOfXSquares: props.noOfXSquares || 50,
-            noOfYSquares: props.noOfYSquares || 50,
+            height: props.height || 500,
+            width: props.width || 500,
+            rowNumber: props.rowNumber || 50,
+            columnNumber: props.columnNumber || 50,
             color: props.color || 'white'
         }
     }
@@ -20,8 +21,8 @@ class Grid extends Component {
     }
 
     updateCanvas() {
-        const cellHeight = this.state.height / this.state.noOfYSquares;
-        const cellWidth = this.state.width / this.state.noOfXSquares;
+        const cellHeight = this.state.height / this.state.columnNumber;
+        const cellWidth = this.state.width / this.state.rowNumber;
         const ctx = this.refs.canvas.getContext('2d');
 
         ctx.fillStyle = 'white';
