@@ -25,4 +25,3 @@ class Beast extends Component {
 }
 
 export default Beast;
-
