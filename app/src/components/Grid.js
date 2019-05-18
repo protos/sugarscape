@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Grid extends Component {
 
     constructor(props) {
@@ -45,18 +44,36 @@ class Grid extends Component {
     }
 
     renderMarkers(ctx, cellHeight, cellWidth) {
-        let ptX = 0;
-        let ptY = 0;
         console.log ('No of beasts: ' + this.state.markers.length);
+
+        ctx.lineWidth = 1;
         for (let a = 0, b = this.state.markers.length; a < b; a++) {
-            ptX = (this.state.markers[a].x + 1) * (cellWidth / 2);
-            ptY = (this.state.markers[a].y + 1) * (cellHeight / 2);
+            let ptX = 0;
+            let ptY = 0;
 
-            console.log ('marker: ' + this.state.markers[a].x + ' ' + ptX + ' ' +  this.state.markers[a].y + ' ' + ptY + " " +  (cellHeight / 2) + " | " +  (cellWidth / 2));
+            ptX = (this.state.markers[a].x * cellWidth  - (cellWidth / 2));
+            ptY = (this.state.markers[a].y * cellHeight - (cellHeight / 2));
+            ctx.fillStyle = this.getRandomColor();
+            ctx.beginPath();
+            ctx.arc(ptX, ptY, 7, 0, 2 * Math.PI, false);
+            ctx.fill();
+            ctx.stroke();
 
+            console.log ('marker: ' + this.state.markers[a].x + ' ' + ptX + ' ' +  this.state.markers[a].y + ' ' +
+            ptY);
         }
-
     }
+
+
+    getRandomColor() {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
 
     render() {
         return (

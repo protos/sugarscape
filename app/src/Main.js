@@ -16,10 +16,10 @@ class Main extends Component {
             beastNumber: 20,
             beastLocations: [],
             beasts: [],
-            rowNumber: 10,
-            columnNumber: 10,
-            gridHeight: 500,
-            gridWidth: 500
+            rowNumber: 20,
+            columnNumber: 20,
+            gridHeight: 600,
+            gridWidth: 600
         };
 
         for (let a = 0, b = this.state.columnNumber - 1; a < b; a++ ) {
@@ -39,12 +39,12 @@ class Main extends Component {
         let x = 0, y = 0, flag = 0, cnt = 0;
         for (let k = 0; k < this.state.beastLocations.length; k++) {
             while (flag === 0) {
-                x = Math.floor(Math.random() * 9);
-                y = Math.floor(Math.random() * 9);
+                x = Math.floor(Math.random() * this.state.columnNumber);
+                y = Math.floor(Math.random() * this.state.rowNumber);
                 if ((x === this.state.beastLocations[k].x) && (y === this.state.beastLocations[k].y)) {
 
-                    x = Math.floor(Math.random() * 9);
-                    y = Math.floor(Math.random() * 9);
+                    x = Math.floor(Math.random() * this.state.columnNumber);
+                    y = Math.floor(Math.random() * this.state.rowNumber);
                 } else {
                     flag = 1;
                 }
@@ -68,12 +68,23 @@ class Main extends Component {
                                           metabolism={Math.floor(Math.random() * 3) + 1}
                                           vision={Math.floor(Math.random() * 4) + 2} />);
         }
-        // trigger flywheel event loop.
+    }
+
+
+    flyWheel() {
+      console.log('Flywheel turning');
+
+      for (let a = 0, b = 5; a < b; a++) {
+        //this.sleep(2000).then(() => {
+          console.log('Turning: ' + a)
+        //}, 3000);
+      }
     }
 
 
     componentDidMount() {
         console.log('component Mounted');
+        this.flyWheel();
     }
 
 
@@ -91,7 +102,7 @@ class Main extends Component {
                           gridHeight={this.state.gridHeight}
                           gridWidth={this.state.gridWidth}
                           markers={this.state.beastLocations}>
-                        {this.state.squares}
+//                        {this.state.squares}
                     </Grid>
                 </div>
             </div>
