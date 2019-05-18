@@ -28,13 +28,13 @@ class Grid extends Component {
         ctx.fillStyle = 'white';
         ctx.fillRect(0,0, this.state.width, this.state.height);
 
-        for (let a = 0, b = 49; a < b; a++ ) {
-            ctx.moveTo(((a + 1) * cellWidth), 0);
-            ctx.lineTo(((a + 1) * cellWidth), this.state.height);
+        for (let a = 1, b = this.state.columnNumber; a < b; a++ ) {
+            ctx.moveTo(a * cellWidth, 0);
+            ctx.lineTo(a * cellWidth, this.state.height);
         }
-        for (let a = 0, b = 49; a < b; a++ ) {
-            ctx.moveTo(0, ((a + 1) * cellHeight));
-            ctx.lineTo(this.state.width, ((a + 1) * cellHeight));
+        for (let a = 1, b = this.state.rowNumber; a < b; a++ ) {
+            ctx.moveTo(0, a * cellHeight);
+            ctx.lineTo(this.state.width, a * cellHeight);
         }
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 0.5;

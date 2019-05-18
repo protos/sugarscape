@@ -19,7 +19,9 @@ class Main extends Component {
             rowNumber: 20,
             columnNumber: 20,
             gridHeight: 600,
-            gridWidth: 600
+            gridWidth: 600,
+            timer: 0,
+            turnCounter: 0
         };
 
         for (let a = 0, b = this.state.columnNumber - 1; a < b; a++ ) {
@@ -73,17 +75,28 @@ class Main extends Component {
 
     flyWheel() {
       console.log('Flywheel turning');
-
       for (let a = 0, b = 5; a < b; a++) {
-        //this.sleep(2000).then(() => {
-          console.log('Turning: ' + a)
-        //}, 3000);
+
+          //this.state.timer=setInterval(this.running.bind(this), 1000);
       }
+    }
+
+
+    running() {
+        console.log('running: ' + this.state.turnCounter);
+        if (this.state.turnCounter === 5) {
+          console.log('clearing: ' + this.state.timer);
+          clearTimeout(this.state.timer);
+        }
+        this.state.turnCounter += 1;
     }
 
 
     componentDidMount() {
         console.log('component Mounted');
+
+
+
         this.flyWheel();
     }
 
