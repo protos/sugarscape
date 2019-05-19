@@ -73,10 +73,14 @@ class Main extends Component {
     }
 
 
-    flyWheel() {
+    crankflyWheel() {
       console.log('Flywheel turning');
-      for (let a = 0, b = 5; a < b; a++) {
+      //let time = Date.now().getTime();
 
+    //  window.requestAnimationFrame(this.crankflyWheel.bind(this));
+
+      for (let a = 0, b = 5; a < b; a++) {
+          console.log ("Time: " + new Date().getTime());
           //this.state.timer=setInterval(this.running.bind(this), 1000);
       }
     }
@@ -95,9 +99,7 @@ class Main extends Component {
     componentDidMount() {
         console.log('component Mounted');
 
-
-
-        this.flyWheel();
+        this.crankflyWheel();
     }
 
 
