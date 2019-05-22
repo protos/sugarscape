@@ -7,13 +7,13 @@ class Grid extends Component {
 
         this.state = {
             markers: props.markers,
-            beastLocations: props.beastLocations,
-            height: props.height || 500,
-            width: props.width || 500,
-            rowNumber: props.rowNumber || 50,
-            columnNumber: props.columnNumber || 50,
-            color: props.color || 'white'
         }
+
+        this.height = props.height || 500;
+        this.width = props.width || 500;
+        this.rowNumber = props.rowNumber || 50;
+        this.columnNumber = props.columnNumber || 50;
+
     }
 
     componentDidMount() {
@@ -21,20 +21,20 @@ class Grid extends Component {
     }
 
     updateCanvas() {
-        const cellHeight = this.state.height / this.state.columnNumber;
-        const cellWidth = this.state.width / this.state.rowNumber;
+        const cellHeight = this.height / this.columnNumber;
+        const cellWidth = this.width / this.rowNumber;
         const ctx = this.refs.canvas.getContext('2d');
 
         ctx.fillStyle = 'white';
-        ctx.fillRect(0,0, this.state.width, this.state.height);
+        ctx.fillRect(0,0, this.width, this.height);
 
-        for (let a = 1, b = this.state.columnNumber; a < b; a++ ) {
+        for (let a = 1, b = this.columnNumber; a < b; a++ ) {
             ctx.moveTo(a * cellWidth, 0);
-            ctx.lineTo(a * cellWidth, this.state.height);
+            ctx.lineTo(a * cellWidth, this.height);
         }
-        for (let a = 1, b = this.state.rowNumber; a < b; a++ ) {
+        for (let a = 1, b = this.rowNumber; a < b; a++ ) {
             ctx.moveTo(0, a * cellHeight);
-            ctx.lineTo(this.state.width, a * cellHeight);
+            ctx.lineTo(this.width, a * cellHeight);
         }
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 0.5;
@@ -79,8 +79,8 @@ class Grid extends Component {
         return (
             <div className="Grid">
                 <canvas ref="canvas"
-                        width={this.state.width}
-                        height={this.state.height}
+                        width={this.width}
+                        height={this.height}
                         className="gridCanvas">
                 </canvas>
             </div>
