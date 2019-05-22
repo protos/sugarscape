@@ -20,9 +20,9 @@ class Main extends Component {
             columnNumber: 20,
             gridHeight: 600,
             gridWidth: 600,
-            timer: 0,
-            turnCounter: 0
+            interval: 5000
         };
+        this.nextTurnTime = new Date().getTime() + this.state.interval;
 
         for (let a = 0, b = this.state.columnNumber - 1; a < b; a++ ) {
             for (let c = 0, d = this.state.rowNumber - 1; c < d; c++) {
@@ -74,25 +74,22 @@ class Main extends Component {
 
 
     crankflyWheel() {
-      console.log('Flywheel turning');
-      //let time = Date.now().getTime();
+      let currentTime = new Date().getTime();
 
-    //  window.requestAnimationFrame(this.crankflyWheel.bind(this));
-
-      for (let a = 0, b = 5; a < b; a++) {
-          console.log ("Time: " + new Date().getTime());
-          //this.state.timer=setInterval(this.running.bind(this), 1000);
+      if (currentTime >= this.nextTurnTime) {
+        this.nextTurnTime = new Date().getTime() + this.state.interval;
+        this.makeTurn();
       }
+      window.requestAnimationFrame(this.crankflyWheel.bind(this));
     }
 
 
-    running() {
-        console.log('running: ' + this.state.turnCounter);
-        if (this.state.turnCounter === 5) {
-          console.log('clearing: ' + this.state.timer);
-          clearTimeout(this.state.timer);
-        }
-        this.state.turnCounter += 1;
+    makeTurn() {
+      console.log('Turning');
+      // clear grid
+      //regenerate beasts;
+      this.generateBeasts();
+      this.render();
     }
 
 
