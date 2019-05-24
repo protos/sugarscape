@@ -1,0 +1,13 @@
+phraseapp:
+  access_token: 918c572346c2ee72fe6e55916b3989b2e5642ea92d6ad2d26dae4d6b39965e52
+  project_id: 5f6b6739755ed4417ee95a223da5d570
+  push:
+    sources:
+    - file: ./app/src/locales/en_EN.json
+      params:
+        file_format: simple_json
+  pull:
+    targets:
+    - file: ./app/src/locales/nl_NL.json
+      params:
+        file_format: simple_json
