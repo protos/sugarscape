@@ -5,17 +5,8 @@ class Grid extends Component {
     constructor(props) {
       console.log("Grid Constructor")
         super(props);
-
-        this.state = {
-            markers: props.markers,
-        }
-
-        this.height = props.height || 500;
-        this.width = props.width || 500;
-        this.rowNumber = props.rowNumber || 50;
-        this.columnNumber = props.columnNumber || 50;
-
-
+        this.cellHeight = this.props.height / this.props.columnNumber;
+        this.cellWidth = this.props.width / this.props.rowNumber;
     }
 
     componentDidMount() {
@@ -25,45 +16,46 @@ class Grid extends Component {
     }
 
     updateCanvas() {
-        const cellHeight = this.height / this.columnNumber;
-        const cellWidth = this.width / this.rowNumber;
+      if (!this.canvasContext) {
+        return;
+      }
+      this.canvasContext.clearRect(0, 0, this.props.width, this.props.height);
 
         this.canvasContext.fillStyle = 'white';
-        this.canvasContext.fillRect(0,0, this.width, this.height);
+        this.canvasContext.fillRect(0,0, this.props.width, this.props.height);
 
-        for (let a = 1, b = this.columnNumber; a < b; a++ ) {
-            this.canvasContext.moveTo(a * cellWidth, 0);
-            this.canvasContext.lineTo(a * cellWidth, this.height);
+        for (let a = 1, b = this.props.columnNumber; a < b; a++ ) {
+            this.canvasContext.moveTo(a * this.cellWidth, 0);
+            this.canvasContext.lineTo(a * this.cellWidth, this.props.height);
         }
-        for (let a = 1, b = this.rowNumber; a < b; a++ ) {
-            this.canvasContext.moveTo(0, a * cellHeight);
-            this.canvasContext.lineTo(this.width, a * cellHeight);
+        for (let a = 1, b = this.props.rowNumber; a < b; a++ ) {
+            this.canvasContext.moveTo(0, a * this.cellHeight);
+            this.canvasContext.lineTo(this.props.width, a * this.cellHeight);
         }
         this.canvasContext.strokeStyle = 'black';
         this.canvasContext.lineWidth = 0.5;
         this.canvasContext.stroke();
 
-        this.renderMarkers(cellHeight, cellWidth);
+        this.renderMarkers();
     }
 
-    renderMarkers(cellHeight, cellWidth) {
-        console.log ('No of beasts: ' + this.state.markers.length);
+    renderMarkers() {
+//        console.log ('No of beasts: ' + this.props.markers.length);
 
         this.canvasContext.lineWidth = 1;
-        for (let a = 0, b = this.state.markers.length; a < b; a++) {
+        for (let a = 0, b = this.props.markers.length; a < b; a++) {
             let ptX = 0;
             let ptY = 0;
 
-            ptX = (this.state.markers[a].props.xPos * cellWidth  - (cellWidth / 2));
-            ptY = (this.state.markers[a].props.yPos * cellHeight - (cellHeight / 2));
+            ptX = (this.props.markers[a].props.xPos * this.cellWidth  - (this.cellWidth / 2));
+            ptY = (this.props.markers[a].props.yPos * this.cellHeight - (this.cellHeight / 2));
             this.canvasContext.fillStyle = this.getRandomColor();
             this.canvasContext.beginPath();
             this.canvasContext.arc(ptX, ptY, 7, 0, 2 * Math.PI, false);
             this.canvasContext.fill();
             this.canvasContext.stroke();
 
-            console.log ('marker: ' + this.state.markers[a].props.xPos + ' ' + ptX + ' ' +  this.state.markers[a].props.yPos + ' ' +
-            ptY);
+//console.log ('marker: ' + this.props.markers[a].props.xPos + ' ' + ptX + ' ' +  this.props.markers[a].props.yPos + ' ' + ptY);
         }
     }
 
@@ -80,12 +72,12 @@ class Grid extends Component {
 
     render() {
         console.log ('Rendering Grid');
-        //this.renderMarkers();
+        this.updateCanvas();
         return (
             <div className="Grid">
                 <canvas ref="canvas"
-                        width={this.width}
-                        height={this.height}
+                        width={this.props.width}
+                        height={this.props.height}
                         className="gridCanvas">
                 </canvas>
             </div>

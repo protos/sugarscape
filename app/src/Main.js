@@ -15,19 +15,17 @@ class Main extends Component {
             squares: [],
             beasts: [],
         };
-        this.beastNumber = 5;
-        this.squareHeight = 25;
-        this.squareWidth = 25;
-        this.rowNumber = 10;
-        this.columnNumber = 10;
-        this.interval = 1000;
+        this.beastNumber = 15;
+        this.squareHeight = 50;
+        this.squareWidth = 50;
+        this.rowNumber = 15;
+        this.columnNumber = 15;
+        this.interval = 3000;
         this.beastLocations = [];
         this.nextTurnTime = new Date().getTime() + this.interval;
 
         for (let a = 0, b = this.columnNumber - 1; a < b; a++ ) {
             for (let c = 0, d = this.rowNumber - 1; c < d; c++) {
-
-                //this.setState({squares[a]: []});
                 this.state.squares[a] = [];
                 this.state.squares[a].push(<Square xPos={a}
                                                    yPos={c}
@@ -42,6 +40,7 @@ class Main extends Component {
     generateBeastCoordinates() {
         let x = 0, y = 0, flag = 0;
         for (let k = 0; k < this.beastLocations.length; k++) {
+           flag = 0;
             while (flag === 0) {
                 x = Math.floor(Math.random() * this.columnNumber);
                 y = Math.floor(Math.random() * this.rowNumber);
@@ -53,7 +52,6 @@ class Main extends Component {
                     flag = 1;
                 }
             }
-            // console.log("Coordinates generated: " + x + " " + y );
         }
         return { x: (x + 1), y: (y + 1) };
     }
@@ -61,6 +59,7 @@ class Main extends Component {
 
     generateBeasts() {
         console.log("generate beasts");
+        this.beastLocations = [];
         let metabolism = 0, vision = 0, beastsBuffer = [];
         for (let k = 0, i = this.beastNumber; k < i; k++) {
             this.beastLocations.push(this.generateBeastCoordinates());
@@ -73,8 +72,6 @@ class Main extends Component {
                                           vision={Math.floor(Math.random() * 4) + 2} />);
         }
         return beastsBuffer;
-
-        //this.beastLocations.push(locationBuffer);
     }
 
 
@@ -90,15 +87,10 @@ class Main extends Component {
 
 
     makeTurn() {
-
       // clear grid
-      //regenerate beasts;
       let beasts = this.generateBeasts();
       console.log('Turning - setting beast state');
-
-      //this.state.beasts = beasts;
       this.setState({beasts: beasts});
-      //this.setState({rowNumber: 20, columnNumber: 20});
     }
 
 
