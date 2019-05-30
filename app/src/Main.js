@@ -12,8 +12,7 @@ class Main extends Component {
         console.log('Main constructor');
         super(props);
         this.state = {
-            squares: [],
-            beasts: [],
+            beasts: []
         };
         this.beastNumber = 15;
         this.squareHeight = 50;
@@ -22,14 +21,15 @@ class Main extends Component {
         this.columnNumber = 15;
         this.interval = 3000;
         this.beastLocations = [];
+        this.squares = [];
         this.nextTurnTime = new Date().getTime() + this.interval;
 
         for (let a = 0, b = this.columnNumber - 1; a < b; a++ ) {
+          this.squares[a] = [];
             for (let c = 0, d = this.rowNumber - 1; c < d; c++) {
-                this.state.squares[a] = [];
-                this.state.squares[a].push(<Square xPos={a}
-                                                   yPos={c}
-                                                   sugarUnitNumber={Math.floor(Math.random() * 3) + 1} />);
+                this.squares[a].push(<Square xPos={a} yPos={c}
+                                             sugarUnitNumber={Math.floor(Math.random() * 3) + 1}
+                                             isOccupied="0"/>);
             }
         }
         console.log ('Squares generated.');
@@ -39,6 +39,7 @@ class Main extends Component {
 
     generateBeastCoordinates() {
         let x = 0, y = 0, flag = 0;
+
         for (let k = 0; k < this.beastLocations.length; k++) {
            flag = 0;
             while (flag === 0) {
@@ -60,14 +61,18 @@ class Main extends Component {
     generateBeasts() {
         console.log("generate beasts");
         this.beastLocations = [];
-        let metabolism = 0, vision = 0, beastsBuffer = [];
+        let metabolism = 0, vision = 0, x, y, beastsBuffer = [];
+
         for (let k = 0, i = this.beastNumber; k < i; k++) {
             this.beastLocations.push(this.generateBeastCoordinates());
             metabolism = Math.floor(Math.random() * 3) + 1;
             vision = Math.floor(Math.random() * 4) + 2;
+            x = this.beastLocations[this.beastLocations.length - 1].x;
+            y = this.beastLocations[this.beastLocations.length - 1].y;
 
-            beastsBuffer.push(<Marker xPos={this.beastLocations[this.beastLocations.length - 1].x}
-                                          yPos={this.beastLocations[this.beastLocations.length - 1].y}
+//            this.squares[x - 1][y - 1].props.isOccupied = 1;
+
+            beastsBuffer.push(<Marker xPos={x} yPos={y}
                                           metabolism={Math.floor(Math.random() * 3) + 1}
                                           vision={Math.floor(Math.random() * 4) + 2} />);
         }
@@ -87,7 +92,6 @@ class Main extends Component {
 
 
     makeTurn() {
-      // clear grid
       let beasts = this.generateBeasts();
       console.log('Turning - setting beast state');
       this.setState({beasts: beasts});
@@ -101,7 +105,6 @@ class Main extends Component {
 
 
     render() {
-    //debugger;
         console.log('rendering main');
         return (
             <div className="App">
@@ -109,13 +112,11 @@ class Main extends Component {
                     SS
                 </header>
                 <div className="main-content">
-                    <Grid squares={this.state.squares}
-                          columnNumber={this.columnNumber}
+                    <Grid columnNumber={this.columnNumber}
                           rowNumber={this.rowNumber}
                           height={this.rowNumber * this.squareHeight}
                           width={this.columnNumber * this.squareWidth}
                           markers={this.state.beasts}>
-//                        {this.state.squares}
                     </Grid>
                 </div>
             </div>

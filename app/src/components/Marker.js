@@ -13,7 +13,6 @@ class Marker extends Component {
             vision: props.vision,           // 2 - 4
             foodStore: 0                    // integer
         };
-        debugger;
     }
 
     render() {

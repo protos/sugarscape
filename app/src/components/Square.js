@@ -10,12 +10,15 @@ class Square extends Component {
             yPos: this.props.yPos || 0,
             // height: this.props.height,
             // width: this.props.width,
-            sugarUnitNumber: this.props.sugarUnitNumber || 1
         }
+        this.sugarUnitNumber = this.props.sugarUnitNumber || 1;
+        this.isOccupied = 0;
     }
 
     render() {
-        return (<div className="square"/>);
+      this.sugarUnitNumber = this.props.sugarUnitNumber;
+      this.isOccupied = this.props.isOccupied;
+      return null;
     }
 }
 

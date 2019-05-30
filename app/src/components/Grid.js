@@ -12,7 +12,7 @@ class Grid extends Component {
     componentDidMount() {
       console.log('Grid component mounted')
       this.canvasContext = this.refs.canvas.getContext('2d');
-      this.updateCanvas(1);
+      this.updateCanvas();
     }
 
     updateCanvas() {
@@ -40,8 +40,6 @@ class Grid extends Component {
     }
 
     renderMarkers() {
-//        console.log ('No of beasts: ' + this.props.markers.length);
-
         this.canvasContext.lineWidth = 1;
         for (let a = 0, b = this.props.markers.length; a < b; a++) {
             let ptX = 0;
@@ -54,8 +52,6 @@ class Grid extends Component {
             this.canvasContext.arc(ptX, ptY, 7, 0, 2 * Math.PI, false);
             this.canvasContext.fill();
             this.canvasContext.stroke();
-
-//console.log ('marker: ' + this.props.markers[a].props.xPos + ' ' + ptX + ' ' +  this.props.markers[a].props.yPos + ' ' + ptY);
         }
     }
 
