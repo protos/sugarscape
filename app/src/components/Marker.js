@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Beast extends Component {
+class Marker extends Component {
     constructor(props) {
         super(props);
 
@@ -13,6 +13,7 @@ class Beast extends Component {
             vision: props.vision,           // 2 - 4
             foodStore: 0                    // integer
         };
+        debugger;
     }
 
     render() {
@@ -24,4 +25,4 @@ class Beast extends Component {
     }
 }
 
-export default Beast;
+export default Marker;
