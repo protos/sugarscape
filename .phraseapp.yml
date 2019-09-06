@@ -1,0 +1,13 @@
+phraseapp:
+  access_token: 316d3fd6583cadb401315b0417f8c4c5ea14da717d9c2add794d66d1d7d38519
+  project_id: 5f6b6739755ed4417ee95a223da5d570
+  push:
+    sources:
+    - file: ./locales/<locale_code>/translation.json
+      params:
+        file_format: simple_json
+  pull:
+    targets:
+    - file: ./locales/<locale_code>/translation.json
+      params:
+        file_format: simple_json

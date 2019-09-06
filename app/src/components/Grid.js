@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 
 class Grid extends Component {
 
+
     constructor(props) {
-      console.log("Grid Constructor")
+      console.log("Grid Constructor");
         super(props);
         this.cellHeight = this.props.height / this.props.columnNumber;
         this.cellWidth = this.props.width / this.props.rowNumber;
     }
 
+
     componentDidMount() {
-      console.log('Grid component mounted')
+      console.log('Grid component mounted');
       this.canvasContext = this.refs.canvas.getContext('2d');
       this.updateCanvas();
     }
+
 
     updateCanvas() {
       if (!this.canvasContext) {
@@ -38,6 +41,7 @@ class Grid extends Component {
 
         this.renderMarkers();
     }
+
 
     renderMarkers() {
         this.canvasContext.lineWidth = 1;
