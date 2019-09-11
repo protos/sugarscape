@@ -10,7 +10,7 @@ class Square extends Component {
             yPos: this.props.yPos || 0,
             // height: this.props.height,
             // width: this.props.width,
-        }
+        };
         this.sugarUnitNumber = this.props.sugarUnitNumber || 1;
         this.isOccupied = 0;
     }

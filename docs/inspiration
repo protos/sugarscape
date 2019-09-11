@@ -1,0 +1,34 @@
+My second computer project, Sugarscape, comes from a paper given by Robert Axtell of the Brookings Institution.
+His presentation was largely a summary of Growing Artificial Societies: Social Science from the Bottom Up by Joshua M. Epstein and Robert L.
+Axtell (Brookings Institution Press/MIT Press, ISBN 0-262-05053-6). It's a report on using computers in "bottom-up" social sciences to simulate
+quite complex behavior with very simple rules. There's a CD-ROM version available with QuickTime movies of test runs.
+
+Sugarscape starts simply. Consider a grid of 50 by 50 squares. Each square contains from zero to four units of "sugar."
+The grid is inhabited by 400 creatures represented by dots. The creatures live on sugar (and nothing else), consuming from one to
+three units per turn. These creatures can see from two to four squares in all directions, and they can move as far as they can see.
+
+Each "year," the creatures are considered in random order, and when its turn comes, a creature looks in all directions, finds the
+uninhabited square it can see that has the most sugar, goes there, and collects all the sugar in the square. It consumes what's
+needed to keep it alive; if it hasn't got enough, it dies. If it got more than it consumes, it keeps the surplus.
+
+We need one more rule: sugar replacement. That can be either full replacement (four unit squares are instantly restored to four units, etc.)
+or partial replacement, such as one unit per year up to the square's starting level.
+
+That's it. Fire it up and watch the dots move. With those simple rules, you get some pretty complex behavior. As you'd expect, the creatures with
+long vision and low metabolism do the best. You can simulate evolution by keeping the number of creatures constant: if one dies, it is replaced
+by another with random metabolism and vision. If you correlate vision with metabolic activity, you get a different result. Mostly, what you end up
+with is a hunter/gatherer society of immortals.
+
+Now you can add combat. One rule might be that the creature with the mos t sugar wins and takes the loser's supplies. You can add sexes with
+mating and inheritance, including the computer equivalent of chromosomes and genes. You can let them age and die. You can add a second substance
+so that commerce can develop. You can add cultures and education; and so on. Before you know it, with very simple rules you get very complicated
+"societies." I was fascinated when I heard the paper, even more intrigued when I got the book, and couldn't wait to start building my own
+Sugarscape experimental landscape.
+
+The program isn't complicated. I have not used the actual Brookings program. I'm designing mine to make it easy to add rules I've thought of that
+Epstein and Axtell don't seem to have tried. Besides, it's fun to plan the program.
+
+They did most of their work on a Mac. What I'm planning is a bit more complicated. It would probably be easier to do this on a Mac, but it will run
+faster on my Compaq workstation with dual Pentium Pro processors; besides, I have to learn VB and Delph i to get Roberta's program running in Win 95.
+Both projects are taking longer than I like, but that's mostly because I'm also writing these columns, finishing two novels, and making several
+out-of-town speeches. It's a great life if you don't weaken.

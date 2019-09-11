@@ -4,26 +4,23 @@ import Square from './components/Square'
 import Marker from './components/Marker'
 import './css/Main.css';
 
-
 class Main extends Component {
-
 
     constructor(props) {
         console.log('Main constructor');
         super(props);
         this.state = {
-            beasts: [],
-            beastLocations: []
+            beasts: []
         };
         this.beastNumber = 15;
+        this.beastLocations = [];
         this.squareHeight = 25;
         this.squareWidth = 25;
         this.rowNumber = 15;
         this.columnNumber = 15;
-//        this.beastLocations = [];
         this.squares = [];
 
-        this.interval = 3000;
+        this.interval = 1000;
         this.nextTurnTime = new Date().getTime() + this.interval;
 
         for (let a = 0, b = this.columnNumber - 1; a < b; a++) {
@@ -38,6 +35,16 @@ class Main extends Component {
     }
 
 
+    static getRandomColor() {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
     generateBeastCoordinates(index) {
         let x = 0, y = 0, flag = 0;
 
@@ -46,9 +53,8 @@ class Main extends Component {
             while (flag === 0) {
                 x = Math.floor(Math.random() * this.columnNumber);
                 y = Math.floor(Math.random() * this.rowNumber);
-                if (this.state.beastLocations.length !== 0) {
-                    if ((x === this.state.beastLocations[k].x) && (y === this.state.beastLocations[k].y)) {
-
+                if (this.beastLocations.length !== 0) {
+                    if ((x === this.beastLocations[k].x) && (y === this.beastLocations[k].y)) {
                         x = Math.floor(Math.random() * this.columnNumber);
                         y = Math.floor(Math.random() * this.rowNumber);
                     } else {
@@ -68,44 +74,31 @@ class Main extends Component {
 
     generateBeasts() {
         console.log("generate beasts");
-        let beastLoc = [];
-        let metabolism = 0, vision = 0, x, y, beastsBuffer = [];
+        let beasts = [];
 
         for (let k = 0, i = this.beastNumber; k < i; k++) {
-            beastLoc.push(this.generateBeastCoordinates(k));
-            metabolism = Math.floor(Math.random() * 3) + 1;
-            vision = Math.floor(Math.random() * 4) + 2;
+            this.beastLocations.push(this.generateBeastCoordinates(k));
 
-            x = beastLoc[beastLoc.length - 1].x;
-            y = beastLoc[beastLoc.length - 1].y;
-
-
-            beastsBuffer.push(<Marker xPos={x} yPos={y}
-                                 metabolism={Math.floor(Math.random() * 3) + 1}
-                                 vision={Math.floor(Math.random() * 4) + 2}
-                                 color={this.getRandomColor()} />);
-
+            beasts.push(<Marker xPos={this.beastLocations[this.beastLocations.length - 1].x}
+                                      yPos={this.beastLocations[this.beastLocations.length - 1].y}
+                                      metabolism={Math.floor(Math.random() * 3) + 1}
+                                      vision={Math.floor(Math.random() * 4) + 2}
+                                      color={Main.getRandomColor()} />);
         }
-        this.setState((state) => {
-            console.log ('Setting beastLocations to state!!');
-            return {beastLocations: beastLoc}
-        });
-        return beastsBuffer;
+        return beasts;
     }
 
 
     updateBeasts() {
-        let beasts = this.state.beasts;
-        let beastsBuffer = [];
-        let x, y;
+        let beasts = this.state.beasts, x, beastsBuffer = [];
+
         for (let k = 0; k < beasts.length; k++) {
             x = (beasts[k].props.xPos + 1) <= this.columnNumber ? beasts[k].props.xPos + 1 : 1;
-            y = beasts[k].props.yPos;
 
-            beastsBuffer.push(<Marker xPos={x} yPos={y}
+            beastsBuffer.push(<Marker xPos={x} yPos={beasts[k].props.yPos}
                                       metabolism={beasts[k].props.metabolism}
                                       vision={beasts[k].props.vision}
-                                      color={beasts[k].props.color}/>);
+                                      color={beasts[k].props.color} />);
         }
         this.setState({beasts: beastsBuffer});
     }
@@ -120,16 +113,6 @@ class Main extends Component {
       }
 
       window.requestAnimationFrame(this.crankFlyWheel.bind(this));
-    }
-
-
-    getRandomColor() {
-        let letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     }
 
 
