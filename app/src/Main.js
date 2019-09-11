@@ -46,7 +46,6 @@ class Main extends Component {
             while (flag === 0) {
                 x = Math.floor(Math.random() * this.columnNumber);
                 y = Math.floor(Math.random() * this.rowNumber);
-                debugger;
                 if (this.state.beastLocations.length !== 0) {
                     if ((x === this.state.beastLocations[k].x) && (y === this.state.beastLocations[k].y)) {
 
@@ -69,31 +68,46 @@ class Main extends Component {
 
     generateBeasts() {
         console.log("generate beasts");
-        let beastLocations = [];
+        let beastLoc = [];
         let metabolism = 0, vision = 0, x, y, beastsBuffer = [];
 
         for (let k = 0, i = this.beastNumber; k < i; k++) {
-            beastLocations.push(this.generateBeastCoordinates(k));
+            beastLoc.push(this.generateBeastCoordinates(k));
             metabolism = Math.floor(Math.random() * 3) + 1;
             vision = Math.floor(Math.random() * 4) + 2;
-            x = beastLocations[beastLocations.length - 1].x;
-            y = beastLocations[beastLocations.length - 1].y;
 
-            //this.setState({beastLocations: beastLocations});
-            this.setState((state) => {
-                // Important: read `state` instead of `this.state` when updating.
-                return {beastLocations: beastLocations}
-            });
+            x = beastLoc[beastLoc.length - 1].x;
+            y = beastLoc[beastLoc.length - 1].y;
 
-            //            this.squares[x - 1][y - 1].props.isOccupied = 1;
-            debugger;
-           beastsBuffer.push(<Marker xPos={this.state.beastLocations[k].x} yPos={this.state.beastLocations[k].y}
 
- //               beastsBuffer.push(<Marker xPos={x} yPos={y}
-                                          metabolism={Math.floor(Math.random() * 3) + 1}
-                                          vision={Math.floor(Math.random() * 4) + 2} />);
+            beastsBuffer.push(<Marker xPos={x} yPos={y}
+                                 metabolism={Math.floor(Math.random() * 3) + 1}
+                                 vision={Math.floor(Math.random() * 4) + 2}
+                                 color={this.getRandomColor()} />);
+
         }
+        this.setState((state) => {
+            console.log ('Setting beastLocations to state!!');
+            return {beastLocations: beastLoc}
+        });
         return beastsBuffer;
+    }
+
+
+    updateBeasts() {
+        let beasts = this.state.beasts;
+        let beastsBuffer = [];
+        let x, y;
+        for (let k = 0; k < beasts.length; k++) {
+            x = (beasts[k].props.xPos + 1) <= this.columnNumber ? beasts[k].props.xPos + 1 : 1;
+            y = beasts[k].props.yPos;
+
+            beastsBuffer.push(<Marker xPos={x} yPos={y}
+                                      metabolism={beasts[k].props.metabolism}
+                                      vision={beasts[k].props.vision}
+                                      color={beasts[k].props.color}/>);
+        }
+        this.setState({beasts: beastsBuffer});
     }
 
 
@@ -104,23 +118,24 @@ class Main extends Component {
         this.nextTurnTime = new Date().getTime() + this.interval;
         this.makeTurn();
       }
+
       window.requestAnimationFrame(this.crankFlyWheel.bind(this));
     }
 
 
-    makeTurn() {
-        console.log('Turning - setting beast state');
-        let beasts = this.state.beasts;
-        let beastsBuffer = [];
-        for (let k = 0; k < beasts.length; k++) {
-            // beastsBuffer.push(<Marker xPos={x} yPos={y}
-            //                           metabolism={Math.floor(Math.random() * 3) + 1}
-            //                           vision={Math.floor(Math.random() * 4) + 2} />);
-
-            console.log("location: " + beasts[k].state);
-
+    getRandomColor() {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
         }
-        //this.setState({beasts: this.generateBeasts()});
+        return color;
+    }
+
+
+    makeTurn() {
+        console.log('Turning');
+        this.updateBeasts();
     }
 
 

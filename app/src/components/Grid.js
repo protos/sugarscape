@@ -4,7 +4,7 @@ class Grid extends Component {
 
 
     constructor(props) {
-      console.log("Grid Constructor");
+        console.log("Grid Constructor");
         super(props);
         this.cellHeight = this.props.height / this.props.columnNumber;
         this.cellWidth = this.props.width / this.props.rowNumber;
@@ -12,18 +12,17 @@ class Grid extends Component {
 
 
     componentDidMount() {
-      console.log('Grid component mounted');
-      this.canvasContext = this.refs.canvas.getContext('2d');
-      this.updateCanvas();
+        console.log('Grid component mounted');
+        this.canvasContext = this.refs.canvas.getContext('2d');
+        this.updateCanvas();
     }
 
 
     updateCanvas() {
-      if (!this.canvasContext) {
-        return;
-      }
-      this.canvasContext.clearRect(0, 0, this.props.width, this.props.height);
-
+        if (!this.canvasContext) {
+            return;
+        }
+        this.canvasContext.clearRect(0, 0, this.props.width, this.props.height);
         this.canvasContext.fillStyle = 'white';
         this.canvasContext.fillRect(0,0, this.props.width, this.props.height);
 
@@ -31,6 +30,7 @@ class Grid extends Component {
             this.canvasContext.moveTo(a * this.cellWidth, 0);
             this.canvasContext.lineTo(a * this.cellWidth, this.props.height);
         }
+
         for (let a = 1, b = this.props.rowNumber; a < b; a++ ) {
             this.canvasContext.moveTo(0, a * this.cellHeight);
             this.canvasContext.lineTo(this.props.width, a * this.cellHeight);
@@ -38,7 +38,6 @@ class Grid extends Component {
         this.canvasContext.strokeStyle = 'black';
         this.canvasContext.lineWidth = 0.5;
         this.canvasContext.stroke();
-
         this.renderMarkers();
     }
 
@@ -51,22 +50,12 @@ class Grid extends Component {
 
             ptX = (this.props.markers[a].props.xPos * this.cellWidth  - (this.cellWidth / 2));
             ptY = (this.props.markers[a].props.yPos * this.cellHeight - (this.cellHeight / 2));
-            this.canvasContext.fillStyle = this.getRandomColor();
+            this.canvasContext.fillStyle = this.props.markers[a].props.color;
             this.canvasContext.beginPath();
             this.canvasContext.arc(ptX, ptY, 7, 0, 2 * Math.PI, false);
             this.canvasContext.fill();
             this.canvasContext.stroke();
         }
-    }
-
-
-    getRandomColor() {
-      var letters = '0123456789ABCDEF';
-      var color = '#';
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
     }
 
 

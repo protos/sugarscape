@@ -9,6 +9,7 @@ class Marker extends Component {
                 x: props.xPos,
                 y: props.yPos
             },
+            color: props.color,
             metabolism: props.metabolism,   // 1 - 3
             vision: props.vision,           // 2 - 4
             foodStore: 0                    // integer
