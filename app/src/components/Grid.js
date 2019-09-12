@@ -36,7 +36,7 @@ class Grid extends Component {
             this.canvasContext.lineTo(this.props.width, a * this.cellHeight);
         }
         this.canvasContext.strokeStyle = 'black';
-        this.canvasContext.lineWidth = 0.5;
+        this.canvasContext.lineWidth = 0.3;
         this.canvasContext.stroke();
         this.renderMarkers();
     }
@@ -52,7 +52,7 @@ class Grid extends Component {
             ptY = (this.props.markers[a].props.yPos * this.cellHeight - (this.cellHeight / 2));
             this.canvasContext.fillStyle = this.props.markers[a].props.color;
             this.canvasContext.beginPath();
-            this.canvasContext.arc(ptX, ptY, 7, 0, 2 * Math.PI, false);
+            this.canvasContext.arc(ptX, ptY, this.props.markers[a].props.radius, 0, 2 * Math.PI, false);
             this.canvasContext.fill();
             this.canvasContext.stroke();
         }

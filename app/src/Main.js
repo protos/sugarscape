@@ -12,12 +12,13 @@ class Main extends Component {
         this.state = {
             beasts: []
         };
-        this.beastNumber = 15;
+        this.beastNumber = 35;
         this.beastLocations = [];
-        this.squareHeight = 25;
-        this.squareWidth = 25;
-        this.rowNumber = 15;
-        this.columnNumber = 15;
+        this.beastRadius = 4;
+        this.squareHeight = 15;
+        this.squareWidth = 15;
+        this.rowNumber = 25;
+        this.columnNumber = 25;
         this.squares = [];
 
         this.interval = 1000;
@@ -49,12 +50,13 @@ class Main extends Component {
         let x = 0, y = 0, flag = 0;
 
         for (let k = 0; k < index; k++) {
-           flag = 0;
+            flag = 0;
             while (flag === 0) {
                 x = Math.floor(Math.random() * this.columnNumber);
                 y = Math.floor(Math.random() * this.rowNumber);
                 if (this.beastLocations.length !== 0) {
                     if ((x === this.beastLocations[k].x) && (y === this.beastLocations[k].y)) {
+
                         x = Math.floor(Math.random() * this.columnNumber);
                         y = Math.floor(Math.random() * this.rowNumber);
                     } else {
@@ -83,7 +85,8 @@ class Main extends Component {
                                       yPos={this.beastLocations[this.beastLocations.length - 1].y}
                                       metabolism={Math.floor(Math.random() * 3) + 1}
                                       vision={Math.floor(Math.random() * 4) + 2}
-                                      color={Main.getRandomColor()} />);
+                                      color={Main.getRandomColor()}
+                                      radius={this.beastRadius}  />);
         }
         return beasts;
     }
@@ -98,21 +101,21 @@ class Main extends Component {
             beastsBuffer.push(<Marker xPos={x} yPos={beasts[k].props.yPos}
                                       metabolism={beasts[k].props.metabolism}
                                       vision={beasts[k].props.vision}
-                                      color={beasts[k].props.color} />);
+                                      color={beasts[k].props.color}
+                                      radius={this.beastRadius} />);
         }
         this.setState({beasts: beastsBuffer});
     }
 
 
     crankFlyWheel() {
-      let currentTime = new Date().getTime();
+        let currentTime = new Date().getTime();
 
-      if (currentTime >= this.nextTurnTime) {
-        this.nextTurnTime = new Date().getTime() + this.interval;
-        this.makeTurn();
-      }
-
-      window.requestAnimationFrame(this.crankFlyWheel.bind(this));
+        if (currentTime >= this.nextTurnTime) {
+            this.nextTurnTime = new Date().getTime() + this.interval;
+            this.makeTurn();
+        }
+        window.requestAnimationFrame(this.crankFlyWheel.bind(this));
     }
 
 
