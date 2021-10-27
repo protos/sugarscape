@@ -10,25 +10,32 @@ class Main extends Component {
         console.log('Main constructor');
         super(props);
         this.state = {
-            beasts: []
+            beasts: [],
+            sugar: []
         };
         this.beastNumber = 35;
         this.beastLocations = [];
-        this.beastRadius = 4;
-        this.squareHeight = 15;
-        this.squareWidth = 15;
-        this.rowNumber = 25;
-        this.columnNumber = 25;
+        this.beastRadius = 6;
+        this.squareHeight = 25;
+        this.squareWidth = 25;
+        this.rowNumber = 26;
+        this.columnNumber = 26;
         this.squares = [];
 
+        
         this.interval = 1000;
         this.nextTurnTime = new Date().getTime() + this.interval;
 
-        for (let a = 0, b = this.columnNumber - 1; a < b; a++) {
+        this.sugarBuffer = [];
+        let sugarUnitNumber = 0;
+        for (let a = 0, b = this.columnNumber + 1; a < b; a++) {
             this.squares[a] = [];
-            for (let c = 0, d = this.rowNumber - 1; c < d; c++) {
+            this.sugarBuffer[a] = [];
+            for (let c = 0, d = this.rowNumber + 1; c < d; c++) {
+                sugarUnitNumber = Math.floor(Math.random() * 3) + 1;
+                this.sugarBuffer[a].push(sugarUnitNumber);
                 this.squares[a].push(<Square xPos={a} yPos={c}
-                                             sugarUnitNumber={Math.floor(Math.random() * 3) + 1}
+                                             sugarUnitNumber={sugarUnitNumber}
                                              isOccupied="0"/>);
             }
         }
@@ -74,7 +81,7 @@ class Main extends Component {
     }
 
 
-    generateBeasts() {
+    initBeasts() {
         console.log("generate beasts");
         let beasts = [];
 
@@ -120,20 +127,12 @@ class Main extends Component {
 
 
     makeTurn() {
-        console.log('Turning');
+        //console.log('Turning');
         this.updateBeasts();
     }
 
-
-    componentDidMount() {
-        this.setState({beasts: this.generateBeasts()});
-        console.log('component Mounted');
-        this.crankFlyWheel();
-    }
-
-
-    render() {
-        console.log('rendering main');
+        
+    generateMainGrid() {
         return (
             <div className="App">
                 <header className="App-header">
@@ -144,11 +143,26 @@ class Main extends Component {
                           rowNumber={this.rowNumber}
                           height={this.rowNumber * this.squareHeight}
                           width={this.columnNumber * this.squareWidth}
-                          markers={this.state.beasts}>
+                          markers={this.state.beasts}
+                          food={this.state.sugar}>
                     </Grid>
                 </div>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.setState({beasts: this.initBeasts()});
+        this.setState({sugar: this.sugarBuffer});
+        console.log('component Mounted');
+        //this.crankFlyWheel();
+    }
+
+
+
+    render() {
+        console.log('rendering main');
+        return this.generateMainGrid();
     }
 }
 

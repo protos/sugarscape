@@ -6,15 +6,14 @@ class Grid extends Component {
     constructor(props) {
         console.log("Grid Constructor");
         super(props);
-        this.cellHeight = this.props.height / this.props.columnNumber;
-        this.cellWidth = this.props.width / this.props.rowNumber;
+        this.cellHeight = props.height / props.rowNumber;
+        this.cellWidth = props.width / props.columnNumber;
     }
 
 
     componentDidMount() {
         console.log('Grid component mounted');
         this.canvasContext = this.refs.canvas.getContext('2d');
-        this.updateCanvas();
     }
 
 
@@ -30,7 +29,6 @@ class Grid extends Component {
             this.canvasContext.moveTo(a * this.cellWidth, 0);
             this.canvasContext.lineTo(a * this.cellWidth, this.props.height);
         }
-
         for (let a = 1, b = this.props.rowNumber; a < b; a++ ) {
             this.canvasContext.moveTo(0, a * this.cellHeight);
             this.canvasContext.lineTo(this.props.width, a * this.cellHeight);
@@ -39,22 +37,55 @@ class Grid extends Component {
         this.canvasContext.lineWidth = 0.3;
         this.canvasContext.stroke();
         this.renderMarkers();
+        this.renderSugar();
     }
 
 
     renderMarkers() {
+        console.log("Render Markers.");
         this.canvasContext.lineWidth = 1;
-        for (let a = 0, b = this.props.markers.length; a < b; a++) {
-            let ptX = 0;
-            let ptY = 0;
+        let markers = this.props.markers;
+        let ptX = 0;
+        let ptY = 0;
+        
+        for (let a = 0, b = markers.length; a < b; a++) {
 
-            ptX = (this.props.markers[a].props.xPos * this.cellWidth  - (this.cellWidth / 2));
-            ptY = (this.props.markers[a].props.yPos * this.cellHeight - (this.cellHeight / 2));
-            this.canvasContext.fillStyle = this.props.markers[a].props.color;
+            ptX = (markers[a].props.xPos * this.cellWidth  - (this.cellWidth / 2));
+            ptY = (markers[a].props.yPos * this.cellHeight - (this.cellHeight / 2));
+            this.canvasContext.fillStyle = markers[a].props.color;
             this.canvasContext.beginPath();
-            this.canvasContext.arc(ptX, ptY, this.props.markers[a].props.radius, 0, 2 * Math.PI, false);
+            this.canvasContext.arc(ptX, ptY, markers[a].props.radius, 0, 2 * Math.PI, false);
             this.canvasContext.fill();
             this.canvasContext.stroke();
+        }
+    }
+
+
+    renderSugar() {
+        console.log("Render Sugar.");
+        let food = this.props.food;
+        let ptX = 0;
+        let ptY = 0;
+        
+        for (let a = 0, b = food.length; a < b; a++) {
+            for (let c = 0, d = food[a].length; c < d; c++) {
+                ptX = (a * this.cellWidth  - (this.cellWidth / 2));
+                ptY = (c * this.cellHeight - (this.cellHeight / 2));
+                
+            this.canvasContext.fillStyle = "red";
+            this.canvasContext.beginPath();
+            this.canvasContext.arc(ptX, ptY, 2, 0, 2 * Math.PI, false);
+            this.canvasContext.fill();
+            this.canvasContext.stroke();
+                
+                
+//                this.canvasContext.text({
+//                    "text": food[a][c],
+//                    "x": ptX,
+//                    "y": ptY
+//                });
+//            console.log("Sugar!: " + food[a][c]);
+            }
         }
     }
 
