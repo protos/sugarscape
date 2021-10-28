@@ -11,35 +11,19 @@ class Main extends Component {
         super(props);
         this.state = {
             beasts: [],
-            sugar: []
+            squares: []
         };
         this.beastNumber = 35;
         this.beastLocations = [];
-        this.beastRadius = 6;
-        this.squareHeight = 25;
-        this.squareWidth = 25;
-        this.rowNumber = 26;
-        this.columnNumber = 26;
-        this.squares = [];
-
+        this.beastRadius = 4;
+        this.squareHeight = 30;
+        this.squareWidth = 30;
+        this.rowNumber = 24;
+        this.columnNumber = 24;
         
         this.interval = 1000;
         this.nextTurnTime = new Date().getTime() + this.interval;
 
-        this.sugarBuffer = [];
-        let sugarUnitNumber = 0;
-        for (let a = 0, b = this.columnNumber + 1; a < b; a++) {
-            this.squares[a] = [];
-            this.sugarBuffer[a] = [];
-            for (let c = 0, d = this.rowNumber + 1; c < d; c++) {
-                sugarUnitNumber = Math.floor(Math.random() * 3) + 1;
-                this.sugarBuffer[a].push(sugarUnitNumber);
-                this.squares[a].push(<Square xPos={a} yPos={c}
-                                             sugarUnitNumber={sugarUnitNumber}
-                                             isOccupied="0"/>);
-            }
-        }
-        console.log ('Squares generated');
     }
 
 
@@ -77,7 +61,7 @@ class Main extends Component {
                 }
             }
         }
-        return { x: (x + 1), y: (y + 1) };
+        return { x: x, y: y };
     }
 
 
@@ -99,11 +83,30 @@ class Main extends Component {
     }
 
 
+    initSquares() {
+        let squares = [];
+        let sugarUnitNumber = 0;
+        
+        for (let a = 0, b = this.columnNumber + 1; a < b; a++) {
+            squares[a] = [];
+            for (let c = 0, d = this.rowNumber + 1; c < d; c++) {
+                sugarUnitNumber = Math.floor(Math.random() * 3) + 1;
+                squares[a].push(<Square xPos={a} yPos={c}
+                                             sugarUnitNumber={sugarUnitNumber}
+                                             isOccupied="0"/>);
+            }
+        }
+        console.log ('Squares initialized');
+        return squares;
+
+    }
+
+
     updateBeasts() {
         let beasts = this.state.beasts, x, beastsBuffer = [];
 
         for (let k = 0; k < beasts.length; k++) {
-            x = (beasts[k].props.xPos + 1) <= this.columnNumber ? beasts[k].props.xPos + 1 : 1;
+            x = beasts[k].props.xPos <= this.columnNumber ? beasts[k].props.xPos + 1 : 1;
 
             beastsBuffer.push(<Marker xPos={x} yPos={beasts[k].props.yPos}
                                       metabolism={beasts[k].props.metabolism}
@@ -132,7 +135,7 @@ class Main extends Component {
     }
 
         
-    generateMainGrid() {
+    initMainGrid() {
         return (
             <div className="App">
                 <header className="App-header">
@@ -144,7 +147,7 @@ class Main extends Component {
                           height={this.rowNumber * this.squareHeight}
                           width={this.columnNumber * this.squareWidth}
                           markers={this.state.beasts}
-                          food={this.state.sugar}>
+                          food={this.state.squares}>
                     </Grid>
                 </div>
             </div>
@@ -152,8 +155,8 @@ class Main extends Component {
     }
 
     componentDidMount() {
+        this.setState({squares: this.initSquares()});
         this.setState({beasts: this.initBeasts()});
-        this.setState({sugar: this.sugarBuffer});
         console.log('component Mounted');
         //this.crankFlyWheel();
     }
@@ -162,7 +165,7 @@ class Main extends Component {
 
     render() {
         console.log('rendering main');
-        return this.generateMainGrid();
+        return this.initMainGrid();
     }
 }
 

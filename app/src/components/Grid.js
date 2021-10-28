@@ -50,8 +50,8 @@ class Grid extends Component {
         
         for (let a = 0, b = markers.length; a < b; a++) {
 
-            ptX = (markers[a].props.xPos * this.cellWidth  - (this.cellWidth / 2));
-            ptY = (markers[a].props.yPos * this.cellHeight - (this.cellHeight / 2));
+            ptX = ((markers[a].props.xPos + 1) * this.cellWidth)  - (this.cellWidth / 2);
+            ptY = ((markers[a].props.yPos + 1) * this.cellHeight) - (this.cellHeight / 2);
             this.canvasContext.fillStyle = markers[a].props.color;
             this.canvasContext.beginPath();
             this.canvasContext.arc(ptX, ptY, markers[a].props.radius, 0, 2 * Math.PI, false);
@@ -64,27 +64,18 @@ class Grid extends Component {
     renderSugar() {
         console.log("Render Sugar.");
         let food = this.props.food;
+        let markers = this.props.markers;
         let ptX = 0;
         let ptY = 0;
-        
+        this.canvasContext.fillStyle = "black";
+        this.canvasContext.font = "bold 12px";
+
         for (let a = 0, b = food.length; a < b; a++) {
             for (let c = 0, d = food[a].length; c < d; c++) {
-                ptX = (a * this.cellWidth  - (this.cellWidth / 2));
-                ptY = (c * this.cellHeight - (this.cellHeight / 2));
+                ptX = ((a + 1) * this.cellWidth  - ((this.cellWidth / 2))) + 4;
+                ptY = ((c + 1) * this.cellHeight - ((this.cellHeight / 2))) - 4;
                 
-            this.canvasContext.fillStyle = "red";
-            this.canvasContext.beginPath();
-            this.canvasContext.arc(ptX, ptY, 2, 0, 2 * Math.PI, false);
-            this.canvasContext.fill();
-            this.canvasContext.stroke();
-                
-                
-//                this.canvasContext.text({
-//                    "text": food[a][c],
-//                    "x": ptX,
-//                    "y": ptY
-//                });
-//            console.log("Sugar!: " + food[a][c]);
+            this.canvasContext.fillText(food[a][c].props.sugarUnitNumber, ptX, ptY);
             }
         }
     }
